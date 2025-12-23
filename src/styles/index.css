@@ -1,8 +1,103 @@
+body.theme-light, body.theme-dark {
+  transition: background-color 3s cubic-bezier(0.77,0,0.18,1), color 0.7s cubic-bezier(0.77,0,0.18,1);
+  position: relative;
+  background-color: #f8fafc;
+}
+body.theme-dark {
+  background-color: var(--bg-1);
+}
+body.theme-light::before, body.theme-dark::before {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  transition: opacity 3s cubic-bezier(0.77,0,0.18,1);
+  opacity: 1;
+}
+body.theme-light::before {
+  background: linear-gradient(120deg, #f8fafc 0%, #e2e8f0 100%);
+  opacity: 1;
+}
+body.theme-dark::before {
+  background: linear-gradient(120deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  opacity: 1;
+}
+body.theme-light {
+  color: #222;
+}
+body.theme-dark {
+  color: var(--white);
+}
+/* Modal styles for updateDetails */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+.modal-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(2,6,23,0.7), 0 1px 0 rgba(255,255,255,0.04);
+  padding: 38px 32px 32px 32px;
+  min-width: 340px;
+  max-width: 40vw;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.modal-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 22px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 28px;
+  cursor: pointer;
+  transition: color 0.18s;
+  z-index: 2;
+}
+.modal-close:hover {
+  color: var(--accent-2);
+}
+@media (max-width: 520px) {
+  .modal-card {
+    padding: 22px 8px 18px 8px;
+    min-width: 0;
+  }
+  .modal-title {
+    font-size: 19px;
+  }
+}
 /* Global styles and polished LoginBox styles */
 :root{
 	--bg-1: #0f172a; /* slate-900 */
 	--bg-2: #0b1222; /* darker shade */
-	--card-bg: rgba(255,255,255,0.06);
+	--card-bg: rgba(255, 255, 255, 0.3);
 	--accent: #06b6d4; /* teal-400 */
 	--accent-2: #0ea5e9; /* sky-400 */
 	--muted: #94a3b8; /* slate-400 */
@@ -195,8 +290,8 @@ body{
 .slide-static-caption{position:absolute; left:18px; bottom:24px; z-index:60; color:var(--white); text-align:left; max-width:65%; padding:14px 20px; background: linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.44)); border-radius:12px; box-shadow: 0 6px 30px rgba(2,6,23,0.6); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.04)}
 .slide-static-caption h3{margin:0; font-size:22px; font-weight:900; letter-spacing:0.6px; text-shadow:0 6px 20px rgba(0,0,0,0.6)}
 .slide-static-caption p{margin:8px 0 0; color:var(--muted); font-size:15px; color:cyan ;text-shadow:0 3px 8px rgba(0, 0, 0, 0.45)}
-.viewServices{z-index: 70;position: absolute;top:65%;left:35%;}
-.viewServices svg{width:30px; height:30px;stroke:var(--white)}
+.viewServicesBtn{z-index: 70;width:fit-content;position: absolute;top:65%;left:35%;}
+.viewServices svg{width:20%; height:30px;stroke:var(--white)}
 
 @media (max-width:768px){
 	.slide img{height:260px}
@@ -218,13 +313,13 @@ body{
 .service-desc{margin:0; color:var(--muted); font-size:14px}
 
 /* Book Now CTA for service cards */
-.service-book{ display:inline-block;margin-left:200px; margin-top:12px; padding:10px 14px; border-radius:10px; font-weight:700; color:var(--white); text-decoration:none; background: linear-gradient(90deg, var(--accent-2) 0%, var(--accent) 100%); box-shadow:0 6px 18px rgba(6,182,212,0.12); transition: transform 0.12s ease, box-shadow 0.12s }
+.service-book{ display:inline-block;margin-left:250px;margin-top:12px; padding:10px 14px; border-radius:10px; font-weight:700; color:var(--white); text-decoration:none; background: linear-gradient(90deg, var(--accent-2) 0%, var(--accent) 100%); box-shadow:0 6px 18px rgba(6,182,212,0.12); transition: transform 0.12s ease, box-shadow 0.12s }
 .service-book:hover{ transform: translateY(-2px); box-shadow:0 12px 30px rgba(6,182,212,0.16) }
 
 .portfolio-item{display:inline;height:fit-content;}
 .portfolio-item img{border-radius:12px;}
 /*.portfolio-item h3{position: relative;top:-10%; color: var(--white); margin-top: 8px;}*/
-.scrollUp{position: fixed;right: 20px;transition-timing-function: ease-in-out;z-index: 200;}
+.scrollUp{position: fixed;bottom: 30px;right: 20px;transition-timing-function: ease-in-out;z-index: 200;}
 
 /* CSS for the portfolio so each h3 appears above its image
    and the two portfolio items sit side-by-side on one line. */
@@ -301,7 +396,7 @@ body{
   }
 }
 
-.portfolio-grid{display:grid; gap:20px;width: 80%;margin:5% 10%;}
+.portfolio-grid{display:grid; gap:20px;width: 80%;position: relative;top:30px;left:8%}
 .portfolio-card{display:flex;justify-content: space-evenly ;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:20px; border-radius:12px; box-shadow:0 8px 20px rgba(2,6,23,0.35); border:1px solid rgba(255,255,255,0.03); transition: transform 160ms ease, box-shadow 160ms ease}
 .portfolio-card:hover{transform:translateY(-6px); box-shadow:0 16px 36px rgba(2,6,23,0.5)}
 .portfolio-title{margin:0 0 8px 0; font-weight:600;margin-left:30%}
@@ -309,14 +404,14 @@ body{
 .portfolio-title:hover{color:#007BFF;transition-duration: .3s;}
 .portfolio-desc:hover{color:#007BFF;transition-duration: .3s;}
 
-Footer{padding: 0;margin:0;height: 20vh;}
+
+Footer{padding: 0;margin:0;height: fit-content;background-color: #007BFF;}
 Footer p{margin:0;padding:0;font-size: 14px;position: relative;top: 10px;color: black;}
-Footer img{height: 10vh;border-radius: 12px;}
+Footer img{height: 8vh;border-radius: 12px;}
 Footer .LinkBtn{width:fit-content;text-decoration: none;border:1px solid aqua;}
 Footer Svg{stroke:var(--bg-1)}
 Footer .container{padding: 0px;height: fit-content;}
 Footer .container a{margin:20px}
-Footer{background-color: #007BFF;}
 
 
 .gallery-section{padding:48px 20px}
@@ -365,6 +460,7 @@ Footer{background-color: #007BFF;}
 .fsi-full {
   max-width: 100%;
   max-height: 100%;
+  scale: 200%;
   object-fit: contain;
   border-radius: 6px;
   box-shadow: 0 8px 30px rgba(0,0,0,0.6);
@@ -374,21 +470,96 @@ Footer{background-color: #007BFF;}
 /* Close button */
 .fsi-close {
   position: absolute;
-  top: -12px;
-  right: -12px;
+  top: -80%;
+  left:155%;
   width: 36px;
   height: 36px;
   border-radius: 50%;
   border: none;
-  background: #fff;
   color: #111;
   font-size: 20px;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(0,0,0,0.3);
 }
+.fsi-close:hover{
+  scale: 120%;
+}
+.fsi-delete:hover{scale: 120%;}
+.fsi-delete{
+  width: fit-content;
+  position: absolute;
+  top: -80%;
+  left:140%;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+.fsi-modal__dialog button svg{height: 30px;width: 30px;margin-left: -11px;}
+.fsi-delete svg{margin-top: -15px;}
+.fsi-close svg{margin-top: -20px;}
 
 .fullGallery-section{padding:48px 20px}
 .fullGallery-section .container{max-width:1180px}
 .fullGallery-grid{display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));}
 .fullGallery-grid img{width:100%; height:200px; object-fit:cover; border-radius:12px; box-shadow:0 8px 20px rgba(2,6,23,0.35); border:1px solid rgba(255,255,255,0.03); transition: transform 160ms ease, box-shadow 160ms ease}
 .fullGallery-grid img:hover{transform:translateY(-6px); box-shadow:0 16px 36px rgba(2,6,23,0.5)}
+
+
+@media (max-width: 576px) { 
+  .viewServicesBtn{top: 270px;left: 320px;height: fit-content;font-size: 1rem;width: fit-content;}
+  .portfolio-title{font-size:x-large;}
+  .portfolio-desc{font-size:small;}
+  .service-card{width: 80%;margin-left: 10%;}
+  .service-book{margin-left:60%;}
+  .switch{margin-left: 100%;}
+}
+@media (min-width: 577px) and (max-width: 651px){
+  .viewServicesBtn{top: 270px;left: 330px;height: fit-content;font-size: 1rem;width: fit-content;}  
+  .service-title{position: relative;left:65px;top:-50px;}
+  .portfolio-title{font-size:x-large;}
+  .portfolio-desc{font-size:small;}
+  .service-desc{position: relative;top:-20px;}
+  .service-book{margin-left:60%;}
+  .switch{margin-left: 200%;}
+}
+@media (min-width: 652px) and (max-width: 768px) {
+  .viewServicesBtn{top: 270px;left: 330px;height: fit-content;font-size: 1rem;width: fit-content;}  
+  .service-title{position: relative;left:65px;top:-50px;}
+  .portfolio-title{font-size:x-large;}
+  .portfolio-desc{font-size:small;}
+  .service-desc{position: relative;top:-20px;}
+  .service-book{margin-left:50%;}
+  .switch{margin-left: 230%;}
+}
+@media (min-width: 769px) and (max-width: 792px) { 
+    .viewServicesBtn{top: 270px;left: 330px;height: fit-content;font-size: 1rem;width: fit-content;}  
+  .service-title{position: relative;left:65px;top:-50px;}
+  .service-desc{position: relative;top:-20px;}
+  .service-book{margin-left:50%;}
+  .switch{margin-left: 250%;}
+}
+@media (min-width: 793px) and (max-width: 920px) { 
+  .viewServicesBtn{top: 400px;left: 420px;height: fit-content;font-size: 1rem;width: fit-content;}
+  .service-book{margin-left:50%;}
+  .switch{margin-left: 280%;}
+}
+@media (min-width: 921px) and (max-width: 951px) { 
+  .viewServicesBtn{top: 400px;left: 420px;height: fit-content;font-size: 1rem;width: fit-content;}
+  .service-book{margin-left:50%;}
+  .switch{margin-left: 150%;}
+}
+@media (min-width: 952px) and (max-width: 980px) { 
+  .viewServicesBtn{top: 400px;left: 500px;height: fit-content;font-size: 1rem;width: fit-content;}
+  .service-book{margin-left:40%;}
+  .switch{margin-left: 200%;}
+}
+@media (min-width: 981px) and (max-width: 1024px) { 
+  .viewServicesBtn{top: 400px;left: 550px;height: fit-content;font-size: 1rem;width: fit-content;}
+  .service-book{margin-left:40%;}
+  .switch{margin-left: 250%;}
+}
+@media (min-width:1025px){
+  .viewServicesBtn{top: 400px;left: 600px;height: fit-content;font-size: 1rem;width: fit-content;}
+  .service-book{margin-left:50%;}
+  .switch{margin-left: 250%;}
+}

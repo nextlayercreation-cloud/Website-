@@ -1,4 +1,6 @@
-import { useNavigate } from "react-router-dom";
+
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Portfolio(){
     const navigate=useNavigate();

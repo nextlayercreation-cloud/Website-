@@ -1,5 +1,6 @@
-import { Link as RouterLink } from "react-router-dom";
-import FullScreenImage from "./FullScreenImage";
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import FullScreenImage from './FullScreenImage';
 
 function Gallery(){
     const rightArrow =(
@@ -15,14 +16,14 @@ function Gallery(){
                     <header style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:24}}>
                         <div>
                             <h2 style={{margin:0}}>Gallery</h2>
-                            <p style={{margin:0, color:'var(--muted)'}}>Our Regular Updating Work Proofs</p>
+                            <p style={{margin:0, color:'var(--muted)'}}>This is What we have done</p>
                         </div>
                     </header>
                     <div className="gallery-grid">
                         <img src="./src/assets/gallery/Bedroom1.jpg" alt="" />
                         <img src="./src/assets/gallery/Bedroom2.jpg" alt="" />
                         <div className="viewAll" style={{background:"url('./src/assets/gallery/Livingroom16.png') center no-repeat", backgroundSize:'cover'}}>
-                            <RouterLink className="viewAll-caption" to="/fullgallery">View All{rightArrow}</RouterLink>
+                            <RouterLink onClick={()=>{document.getElementById("goToTop").click}} className="viewAll-caption" to="/fullgallery">View All{rightArrow}</RouterLink>
                         </div>
                     </div>
                 </div>

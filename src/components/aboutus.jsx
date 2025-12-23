@@ -1,8 +1,6 @@
-import React from 'react'
-import './index.css'
-import about from './data/about'
-import Icon from './components/ui/Icon'
-import Navbar from './Navbar'
+import React from 'react';
+import about from '../data/about';
+import Icon from './ui/Icon';
 
 export default function AboutUs(){
   return (

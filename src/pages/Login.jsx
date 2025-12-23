@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/AuthContext';
 
-function Login({ setIsLogin }) {
+function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const {setIsLogin,companyName}=useAuth();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,8 +19,9 @@ function Login({ setIsLogin }) {
         setError('');
         if (username == "admin" && password == "admin") {
             // update shared login state in App
-            if (typeof setIsLogin === 'function') setIsLogin(true);
-            navigate("/");
+            if (typeof setIsLogin === 'function') 
+                setIsLogin(true);
+                navigate("/");
         } else {
             setIsLogin(false);
             setError("Invalid Username or Password");
@@ -38,7 +41,7 @@ function Login({ setIsLogin }) {
                             </svg>
                         </div>
                         <div>
-                            <div className="card-title">Raj Paintings</div>
+                            <div className="card-title">{companyName}</div>
                             <div className="card-subtitle">Sign in to continue to your account</div>
                         </div>
                     </div>

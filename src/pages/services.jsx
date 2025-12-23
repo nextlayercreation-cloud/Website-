@@ -1,11 +1,14 @@
-import React from 'react'
-import services, { DEFAULT_WHATSAPP_NUMBER } from './data/services'
-import Icon from './components/ui/Icon'
-import './index.css'
-import { Link } from 'react-router-dom'
-import Navbar from './Navbar'
+import React from 'react';
+import services from '../data/services';
+import Icon from '../components/ui/Icon';
+import '../styles/index.css';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { useAuth } from '../hooks/AuthContext';
+import Footer from '../components/Footer';
 
 export default function Services(){
+  const {DEFAULT_WHATSAPP_NUMBER}=useAuth();
   return (
     <>
       <Navbar />
@@ -39,6 +42,8 @@ export default function Services(){
           </div>
         </div>
       </section>
+      <Footer />
+  const revealRef = useScrollReveal();
     </>
   )
 }

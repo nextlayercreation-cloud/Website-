@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
-import './index.css';
+import '../styles/index.css';
 import { Link as RouterLink } from 'react-router-dom';
-import {Link } from 'react-scroll';
+import { Link } from 'react-scroll';
 
 export default function Home(){
   // dynamically import all images from the sliders folder using Vite's import.meta.glob
@@ -77,7 +77,7 @@ export default function Home(){
           <p>Luxury & Trustworthy Services</p>
         </div>
       </section>
-        <RouterLink className="nav-cta viewServices" style={{textDecoration:'none'}} to="/services">View Services{go}</RouterLink>
+        <RouterLink className="nav-cta viewServices viewServicesBtn" style={{textDecoration:'none'}} to="/services">View Services{go}</RouterLink>
           <Link title='Scroll to Top' className='scrollUp' to="home" smooth={true} duration={500} offset={-70} aria-label="Scroll to top of page">
             <div className="btn btn-primary service-icon">
               {upIcon}

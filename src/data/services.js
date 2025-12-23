@@ -1,6 +1,3 @@
-// Replace this phone number with your business WhatsApp number (digits only, no + or spaces)
-export const DEFAULT_WHATSAPP_NUMBER = '+918098613952';
-
 const services = [
   {
     id: 'paint',
@@ -35,7 +32,7 @@ const services = [
     title:'Tiling',
     id:'tiling',
     icon:'tiling',
-    description:'Expert tiling services to enhance the aesthetic look of your floors and walls in your house or commercial Buildings.',
+    description:'Expert tiling services to enhance the aesthetic look of your house or commercial Buildings.',
     whatsappMessage: 'Hello, I would like to inquire about your tiling services. Please provide details on styles and costs.'
   },
   {
