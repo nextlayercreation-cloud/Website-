@@ -1,31 +1,105 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthContext';
+import { signInWithEmailAndPassword,createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import {signInWithPopup,GoogleAuthProvider} from 'firebase/auth';
+import { app } from './auth/api/Firebase';
 
 function Login() {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const {setIsLogin,companyName}=useAuth();
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!username.trim() || !password) {
-            setError('Please enter both username and password.');
-            return;
+        const action = e.nativeEvent.submitter.name;
+        if (action === "logIn") {
+            HandleLogin(e);
         }
-        setError('');
-        if (username == "admin" && password == "admin") {
-            // update shared login state in App
-            if (typeof setIsLogin === 'function') 
-                setIsLogin(true);
-                navigate("/");
-        } else {
+        else if (action === "signUp") {
+            HandleSignUp(e);
+        }
+        else if (action === "googleLogin") {
+            handleGoogleLogin(e);
+        }
+    };
+
+    const HandleLogin = async(e) => {
+        try{
+            if (!email.trim() || !password) {
+                setError('Please enter both email and password.');
+                return;
+            }
+            await signInWithEmailAndPassword(auth, email, password);
+            setIsLogin(true);
+            setError(""); 
+            setEmail("");
+            setPassword("");   
+            alert("Welcome " + email + "!");       
+            navigate("/");
+        }
+        catch (error) {
+            if (error.code === 'auth/user-not-found') {
+                setError('No account found with this Email Address.');
+            } 
+            else if (error.code === 'auth/wrong-password') {
+                setError('Incorrect password.');
+            }
+            else if (error.code === 'auth/invalid-email') {
+                setError('Invalid email address.');
+            }
+            else if(error.code === 'auth/too-many-requests') {
+                setError('Too many failed login attempts. Please try again later.');
+            }
+            else if(error.code === 'auth/network-request-failed') {
+                setError('Network error. Please check your connection and try again.');
+            }
+            else {
+                setError('Login failed. Please try again.');
+            }
             setIsLogin(false);
-            setError("Invalid Username or Password");
-            return;
+        }
+    };
+
+    const HandleSignUp=async (e)=>{
+        try{
+            await createUserWithEmailAndPassword(auth,email,password);
+            alert("Sign Up Successful!");
+            setError("");
+            setEmail("");
+            setPassword("");
+        }
+        catch(error){
+            console.log(error);
+            if (error.code === 'auth/email-already-in-use') {
+                setError('This email is already in use. Please use a different email.');
+            }
+            else if (error.code === 'auth/invalid-email') {
+                setError('Invalid email address.');
+            }
+            else if (error.code === 'auth/weak-password') {
+                setError('Please Pick a Strong Password.');
+            }
+            else{
+                setError("Sign Up Failed ! Please try again later.");
+            }
+        }
+    };
+
+    const handleGoogleLogin = async (e) => {
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        console.log("User Info:", user);
+        alert("Login Successful!");
+        } 
+        catch (error) {
+            console.error("Error during Google Sign-in:", error.message);
         }
     };
 
@@ -47,17 +121,18 @@ function Login() {
                     </div>
 
                     {error && <div className="form-error" role="alert" aria-live="polite">{error}</div>}
-                    <form onSubmit={handleSubmit} className="form" autoComplete="off" noValidate>
+                    <form  className="form" onSubmit={handleSubmit}>
                         <div className="form-block">
-                            <label className="form-label" htmlFor="login-username">Username</label>
+                            <label className="form-label" htmlFor="login-email">Email Address</label>
                             <input
-                                id="login-username"
+                                id="login-email"
                                 className="form-input"
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                placeholder="Your username Here"
-                                autoComplete="username"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="yourmail@example.com"
+                                autoComplete="email"
+                                required
                             />
                         </div>
                         <div className="form-block">
@@ -69,8 +144,9 @@ function Login() {
                                     type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="Your password Here"
+                                    placeholder="Enter your password"
                                     autoComplete="current-password"
+                                    required
                                 />
                                 <button
                                     type="button"
@@ -89,7 +165,9 @@ function Login() {
                         </div>
                         <div className="form-block">
                             <div style={{ marginTop: 12 }}>
-                                <button className="btn-primary" type="submit">Log In</button>
+                                <button className="btn-primary" type="submit" name="logIn">Log In</button>
+                                <button style={{marginTop:"15px"}} className="btn-primary" type="submit" name="signUp">Sign Up</button>
+                                <button style={{marginTop:"15px"}} formNoValidate className="btn btn-primary" type="submit" name="googleLogin">Continue with Google</button>
                             </div>
                         </div>
                     </form>

@@ -1,8 +1,6 @@
-import React from 'react';
 import services from '../data/services';
 import Icon from '../components/ui/Icon';
 import '../styles/index.css';
-import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../hooks/AuthContext';
 import Footer from '../components/Footer';
@@ -43,7 +41,6 @@ export default function Services(){
         </div>
       </section>
       <Footer />
-  const revealRef = useScrollReveal();
     </>
   )
 }
